@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./App.css";
 import BallAnimation from "./ball";
+import SnakeGame from './components/SnakeGame';
+import AstroTrash from './components/AstroTrash';
+import TicTacToe from './components/TicTacToe';
 
 function App() {
   const [activeGame, setActiveGame] = useState("face-viseme");
@@ -10,11 +13,11 @@ function App() {
       case "face-viseme":
         return <BallAnimation />;
       case "snake":
-        return <div>Snake Game Coming Soon</div>;
+        return <SnakeGame />;
       case "astro":
-        return <div>Astro Trash Coming Soon</div>;
+        return <AstroTrash />;
       case "snak":
-        return <div>Snak Game Coming Soon</div>;
+        return <TicTacToe />;
       default:
         return <BallAnimation />;
     }
@@ -74,7 +77,7 @@ function App() {
                   onClick={() => setActiveGame("snak")}
                 >
                   <span className="game-icon">🎮</span>
-                  Snak Game
+                  Tik Tac Toe
                 </button>
               </li>
             </ul>

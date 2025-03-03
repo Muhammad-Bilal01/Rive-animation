@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRive } from "@rive-app/react-canvas";
 
 interface Viseme {
@@ -13,6 +13,7 @@ const BallAnimation = () => {
   const [visemeData, setVisemeData] = useState<Viseme[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const { rive, RiveComponent } = useRive({
     src: "/face.riv",
@@ -26,6 +27,25 @@ const BallAnimation = () => {
       .then((response) => response.json())
       .then((data) => setVisemeData(data))
       .catch((error) => console.error("Error loading visemes:", error));
+
+    // Add audio ended event listener
+    const audio = audioRef.current;
+    if (audio) {
+      audio.addEventListener("ended", () => {
+        setIsPlaying(false);
+        setCurrentIndex(0);
+      });
+    }
+
+    // Cleanup
+    return () => {
+      if (audio) {
+        audio.removeEventListener("ended", () => {
+          setIsPlaying(false);
+          setCurrentIndex(0);
+        });
+      }
+    };
   }, []);
 
   // Animation loop
@@ -36,7 +56,8 @@ const BallAnimation = () => {
     
     const animationInterval = setInterval(() => {
       if (currentIndex >= visemeData.length) {
-        setCurrentIndex(0); // Reset to start
+        setIsPlaying(false);
+        audioRef.current?.pause();
         return;
       }
 
@@ -50,25 +71,11 @@ const BallAnimation = () => {
         }
       });
 
-      // Trigger appropriate animation based on viseme_id
-      if (currentViseme.viseme_id < 7) {
-        const leftRightTrigger = inputs.find(i => i.name === "Star");
-        if (leftRightTrigger) {
-          console.log("Triggering left-right");
-          leftRightTrigger.fire();
-        }
-      }if (currentViseme.viseme_id > 7 && currentViseme.viseme_id < 10) {
-        const leftRightTrigger = inputs.find(i => i.name === "Triangle");
-        if (leftRightTrigger) {
-          console.log("Triggering left-right");
-          leftRightTrigger.fire();
-        }
-      } else {
-        const increaseTrigger = inputs.find(i => i.name === "Polygon");
-        if (increaseTrigger) {
-          console.log("Triggering increase size");
-          increaseTrigger.fire();
-        }
+      // Trigger animation based on viseme_shape
+      const trigger = inputs.find(i => i.name === currentViseme.viseme_shape);
+      if (trigger) {
+        console.log("Triggering:", currentViseme.viseme_shape);
+        trigger.fire();
       }
 
       setCurrentIndex(prev => prev + 1);
@@ -80,6 +87,9 @@ const BallAnimation = () => {
   const handlePlayPause = () => {
     if (!isPlaying) {
       setCurrentIndex(0); // Reset to start when playing
+      audioRef.current?.play();
+    } else {
+      audioRef.current?.pause();
     }
     setIsPlaying(!isPlaying);
   };
@@ -104,8 +114,8 @@ const BallAnimation = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", padding: "20px", backgroundColor: "#313131" }}>
-      <div style={{ width: "300px", height: "300px", margin: "auto", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "10px", backgroundColor: "#313131" }}>
+    <div style={{ textAlign: "center", padding: "20px", backgroundColor: "#333c37" }}>
+      <div style={{ width: "300px", height: "300px", margin: "auto", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "10px", backgroundColor: "#333c37" }}>
         <RiveComponent 
           onMouseLeave={resetToIdle}
         />
@@ -115,6 +125,7 @@ const BallAnimation = () => {
         >
           {isPlaying ? "Pause" : "Play"}
         </button>
+        <audio ref={audioRef} src="/audio.wav" />
       </div>
     </div>
   );

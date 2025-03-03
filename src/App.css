@@ -214,3 +214,183 @@
   justify-content: center;
   align-items: center;
 }
+
+/* Snake Game Styles */
+.snake-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  color: white;
+}
+
+.game-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.start-button {
+  background-color: #00ff88;
+  color: #16213e;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.start-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.game-over {
+  color: #ff3860;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255, 56, 96, 0.5);
+}
+
+.game-board {
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+}
+
+/* Astro Trash Game Styles */
+.astro-trash {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  color: white;
+}
+
+.game-controls {
+  color: #00ff88;
+  font-size: 1rem;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.game-board {
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.1);
+  border: 2px solid rgba(0, 255, 136, 0.2);
+}
+
+/* Add animation for trash collection */
+@keyframes collect {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+.trash-collected {
+  animation: collect 0.2s ease-out forwards;
+}
+
+/* Tic Tac Toe Styles */
+.tic-tac-toe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  color: white;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: #00ff88;
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.board-row {
+  display: flex;
+  gap: 5px;
+}
+
+.square {
+  width: 100px;
+  height: 100px;
+  background-color: #16213e;
+  border: none;
+  border-radius: 5px;
+  font-size: 3rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.square:hover:not(.filled) {
+  background-color: #1f2937;
+}
+
+.square.filled {
+  cursor: not-allowed;
+}
+
+.square.winning {
+  background-color: rgba(0, 255, 136, 0.2);
+}
+
+.game-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.scores {
+  display: flex;
+  gap: 2rem;
+  font-size: 1.5rem;
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.player {
+  font-weight: bold;
+}
+
+.player.x {
+  color: #00ff88;
+}
+
+.player.o {
+  color: #ff3860;
+}
+
+.status {
+  font-size: 1.5rem;
+  color: #00ff88;
+}
+
+.reset-button {
+  background-color: #00ff88;
+  color: #16213e;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reset-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
