@@ -7,7 +7,7 @@ const RocketAnimation = () => {
   const btnRef = useRef(null);
 
   const { rive, RiveComponent } = useRive({
-    src: "/rocket-animation.riv", // Ensure this path is correct
+    src: "/ball.riv", // Ensure this path is correct
     stateMachines: "State Machine 1",
     autoplay: true,
   });
@@ -27,10 +27,10 @@ const RocketAnimation = () => {
         if (currentState === "right-rotate" || currentState === "flying") {
           setBgColor("black");
           setButtonText("Uploading...");
-        } else if (currentState === "rotate-left") {
+        } else if (currentState == "rotate-left") {
           setBgColor("rgb(0, 153, 255)");
           setButtonText("Finished!");
-        } else if (currentState === "Idle") {
+        } else if (currentState == "Idle") {
           setTimeout(() => setButtonText("Upload File"), 1000);
         }
       };
